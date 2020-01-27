@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active:
+    - dev  application:    name: ib-repo
+server:
+  port: 80
+
+---
+spring:  profiles:
+  - dev
+logging:  level:    cn.milai.ib.repo: info
+
+---
+spring:  profiles:  - prod
+logging:  level:    cn.milai.ib.repo: info
