@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<!--
-		configuration 标签上可定义如下属性：
-		scan 配置文件变化时是否重新加载配置文件，默认="true"
-		scanPeriod 指定 scan 检测时间间隔，默认单位 seconds ，默认值="60 seconds"
-		debug 是否打印 logback 内部日志，默认="false"
-	-->
+	<!-- configuration 标签上可定义如下属性： scan 配置文件变化时是否重新加载配置文件，默认="true" scanPeriod 指定 scan 检测时间间隔，默认单位 seconds ，默认值="60 seconds" 
+		debug 是否打印 logback 内部日志，默认="false" -->
 	<!-- 定义变量 -->
 	<!-- 单个日志文件最大大小 -->
 	<property name="max.per.size" value="100MB" />
@@ -21,11 +17,9 @@
 		<property name="log.dir" value="~/log/" />
 	</springProfile>
 	<!-- 日志输出格式 -->
-	<property name="log.pattern"
-		value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} -%msg%n" />
+	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} -%msg%n" />
 	<!-- 从 application.yml 获取变量 -->
-	<springProperty scope="context" name="project.name"
-		source="spring.application.name" />
+	<springProperty scope="context" name="project.name" source="spring.application.name" />
 
 	<springProfile name="dev">
 		<!-- 控制台打印 -->
@@ -33,6 +27,9 @@
 			<encoder charset="utf-8">
 				<pattern>${log.pattern}</pattern>
 			</encoder>
+			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+				<level>INFO</level>
+			</filter>
 		</appender>
 		<!-- 保存文件 -->
 		<appender name="INFO" class="ch.qos.logback.core.FileAppender">
@@ -46,7 +43,7 @@
 			</encoder>
 		</appender>
 
-		<root level="INFO">
+		<root>
 			<appender-ref ref="STDOUT" />
 			<appender-ref ref="INFO" />
 		</root>
@@ -59,8 +56,7 @@
 			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 				<level>ERROR</level>
 			</filter>
-			<rollingPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 				<!-- 按天归档 -->
 				<fileNamePattern>${log.dir}/${project.name}/%d{yyyy-MM-dd}.%i-error.log
 				</fileNamePattern>
@@ -78,8 +74,7 @@
 			<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 				<level>INFO</level>
 			</filter>
-			<rollingPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 				<!-- 按天归档 -->
 				<fileNamePattern>${log.dir}/${project.name}/%d{yyyy-MM-dd}.%i.log
 				</fileNamePattern>
@@ -92,7 +87,7 @@
 			</encoder>
 		</appender>
 
-		<root level="INFO">
+		<root>
 			<appender-ref ref="ERROR" />
 			<appender-ref ref="INFO" />
 		</root>
