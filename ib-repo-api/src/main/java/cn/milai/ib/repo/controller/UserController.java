@@ -1,7 +1,9 @@
 package cn.milai.ib.repo.controller;
 
-import cn.milai.ib.repo.entity.Response;
-import cn.milai.ib.repo.entity.vo.UserVO;
+import javax.servlet.http.HttpServletResponse;
+
+import cn.milai.ib.repo.model.Response;
+import cn.milai.ib.repo.model.vo.UserVO;
 
 /**
  * 用户相关前端接口
@@ -10,7 +12,26 @@ import cn.milai.ib.repo.entity.vo.UserVO;
  */
 public interface UserController {
 
-	Response<Void> login(UserVO user);
+	/**
+	 * 登录
+	 * @param user
+	 * @param response
+	 * @return
+	 */
+	Response<Void> login(UserVO user, HttpServletResponse response);
 
-	Response<Void> register(UserVO user);
+	/**
+	 * 注册
+	 * @param user
+	 * @param response
+	 * @return
+	 */
+	Response<Void> register(UserVO user, HttpServletResponse response);
+
+	/**
+	 * 发送邮箱验证码
+	 * @param email
+	 * @return
+	 */
+	Response<Void> sendValidateCode(String email);
 }

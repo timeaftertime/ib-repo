@@ -1,10 +1,10 @@
 package cn.milai.ib.repo.ex;
 
-import cn.milai.ib.repo.entity.ResponseCode;
+import cn.milai.ib.repo.model.ResponseCode;
 
 /**
  * ib-repo 所有异常类的基类
- * 2020.01.27
+ * @date 2020.01.27
  * @author milai
  */
 public class IBRepoException extends RuntimeException {

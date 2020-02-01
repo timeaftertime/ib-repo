@@ -9,6 +9,7 @@ server:
 logging:
   level:
     root: info
+    org.springframework.web.servlet.mvc.method.annotation: error
 
 ---
 spring:  profiles:

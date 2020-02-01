@@ -1,10 +1,10 @@
-package cn.milai.ib.repo.entity;
+package cn.milai.ib.repo.model;
 
 import lombok.Data;
 
 /**
- * Controller 接口统一返回模型 2020.01.27
- * 
+ * 接口统一返回模型
+ * @date 2020.01.27
  * @author milai
  * @see ResponseCode
  */
@@ -30,7 +30,7 @@ public class Response<T> {
 		return code == ResponseCode.SUCCESS.getCode();
 	}
 
-	private Response(String code, String desc, T data) {
+	public Response(String code, String desc, T data) {
 		this.code = code;
 		this.desc = desc;
 		this.data = data;
@@ -40,16 +40,21 @@ public class Response<T> {
 		this(response.getCode(), response.getDesc(), null);
 	}
 
-	public static Response<Void> fail(ResponseCode response) {
+	public static <T> Response<T> fail(ResponseCode response) {
 		return new Response<>(response);
 	}
 
-	public static Response<Void> fail(ResponseCode response, String args) {
+	public static <T> Response<T> fail(ResponseCode response, String args) {
 		return new Response<>(response.getCode(), String.format(response.getDesc(), args), null);
 	}
 
-	public static Response<Void> success() {
+	public static <T> Response<T> success() {
 		return new Response<>(ResponseCode.SUCCESS);
+	}
+
+	public static <T> Response<T> success(T data) {
+		ResponseCode response = ResponseCode.SUCCESS;
+		return new Response<>(response.getCode(), response.getDesc(), data);
 	}
 
 }

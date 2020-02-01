@@ -9,17 +9,19 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.milai.ib.repo.entity.Response;
-import cn.milai.ib.repo.entity.ResponseCode;
+import cn.milai.ib.repo.ex.ParamInvalidException;
+import cn.milai.ib.repo.model.Response;
+import cn.milai.ib.repo.model.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 全局异常处理器 2020.01.26
+ * Controller 全局异常处理
+ * @date 2020.01.26
  * @author milai
  */
 @Slf4j
 @ControllerAdvice(annotations = Controller.class)
-public class GlobalExceptionHandler {
+public class ControllerExceptionHandler {
 
 	@ExceptionHandler(BindException.class)
 	@ResponseBody
@@ -29,6 +31,13 @@ public class GlobalExceptionHandler {
 			.getRejectedValue();
 		log.info(request.getRequestURI() + " " + desc);
 		return Response.fail(ResponseCode.PARAM_INVALID, desc);
+	}
+
+	@ExceptionHandler(ParamInvalidException.class)
+	@ResponseBody
+	public Response<Void> handleParamInvalid(ParamInvalidException e, HttpServletRequest request) {
+		log.info(request.getRequestURI() + " " + e.getDesc());
+		return Response.fail(ResponseCode.PARAM_INVALID, e.getDesc());
 	}
 
 	@ExceptionHandler(Exception.class)

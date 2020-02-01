@@ -1,6 +1,6 @@
 package cn.milai.ib.repo.service;
 
-import cn.milai.ib.repo.entity.Response;
+import cn.milai.ib.repo.model.Response;
 import cn.milai.ib.repo.service.req.UserLoginRequest;
 import cn.milai.ib.repo.service.req.UserRegisterRequest;
 
@@ -12,16 +12,23 @@ import cn.milai.ib.repo.service.req.UserRegisterRequest;
 public interface UserService {
 
 	/**
-	 * 登录
+	 * 登录，若成功，返回 token
 	 * @param req
 	 * @return
 	 */
-	Response<Void> login(UserLoginRequest req);
+	Response<String> login(UserLoginRequest req);
 
 	/**
-	 * 注册
+	 * 注册，若成功，返回登录后的 token
 	 * @param req
 	 * @return
 	 */
-	Response<Void> register(UserRegisterRequest req);
+	Response<String> register(UserRegisterRequest req);
+
+	/**
+	 * 向 email 发送带有验证码的邮件
+	 * @param email
+	 * @return
+	 */
+	Response<Void> sendValidateEmail(String email);
 }

@@ -1,5 +1,6 @@
-package cn.milai.ib.repo.entity.vo;
+package cn.milai.ib.repo.model.vo;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -17,18 +18,20 @@ public class UserVO {
 
 	@NotNull(groups = RegisterGroup.class, message = "用户名不能为空")
 	@Pattern(groups = { LoginGroup.class, RegisterGroup.class },
-		regexp = "[0-9a-zA-Z_]{8,32}",
-		message = "用户名为8~32位的字母数字或下划线")
+		regexp = "[0-9a-zA-Z_]{6,32}",
+		message = "用户名为长度 6~32 的字母数字或下划线")
 	private String username;
 
 	@NotNull(groups = RegisterGroup.class, message = "密码不能为空")
 	@Pattern(groups = { LoginGroup.class, RegisterGroup.class },
-		regexp = "[0-9a-zA-Z`~!@#$%^&*\\(\\)-=_+,\\./<>\\?\\[\\]\\{\\}|\\\\:\\\'\\\"]{8,32}",
-		message = "密码为8~32位字母数字和普通标点符号")
+		regexp = "[0-9A-Z]{64}",
+		message = "加密后的密码为长度 64 的大写字母和数字")
 	private String password;
 
-	@NotNull(groups = RegisterGroup.class)
 	private String email;
+
+	@NotEmpty(groups = RegisterGroup.class, message = "邮箱验证码不能为空")
+	private String validateCode;
 
 	public interface LoginGroup {
 
