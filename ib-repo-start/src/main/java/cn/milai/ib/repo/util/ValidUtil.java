@@ -12,7 +12,7 @@ import cn.milai.ib.repo.ex.ParamInvalidException;
 public abstract class ValidUtil {
 
 	private static Pattern EMAIL_PATTERN = Pattern.compile(".+@.+");
-	private static Pattern RESOURCE_ID_PATTERN = Pattern.compile("([a-z][0-9a-z]*\\.)+[A-Z][a-z0-9]*");
+	private static Pattern RESOURCE_ID_PATTERN = Pattern.compile("([a-z][0-9a-z]*\\.)+[A-Z][a-zA-Z0-9]*");
 
 	private ValidUtil() {
 

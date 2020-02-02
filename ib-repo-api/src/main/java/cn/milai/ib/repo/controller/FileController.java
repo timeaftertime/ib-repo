@@ -12,22 +12,22 @@ public interface FileController {
 	/**
 	 * 获取指定 character 的 gif 文件
 	 * @param response
-	 * @param characterId
+	 * @param characterCode
 	 * @param status
 	 */
-	void getCharacterImage(HttpServletResponse response, String characterId, String status);
+	void getCharacterImage(HttpServletResponse response, String characterCode, String status);
 
 	/**
 	 * 获取指定 character 的 conf 文件
 	 * @param response
-	 * @param characterId
+	 * @param characterCode
 	 */
-	void getCharacterConf(HttpServletResponse response, String characterId);
+	void getCharacterConf(HttpServletResponse response, String characterCode);
 
 	/**
 	 * 获取指定的 drama 文件
 	 * @param response
-	 * @param dramaId
+	 * @param dramaCode
 	 */
-	void getDrama(HttpServletResponse response, String dramaId);
+	void getDrama(HttpServletResponse response, String dramaCode);
 }

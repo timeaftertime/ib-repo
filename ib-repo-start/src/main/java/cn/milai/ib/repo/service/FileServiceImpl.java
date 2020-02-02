@@ -30,29 +30,29 @@ public class FileServiceImpl implements FileService {
 
 	private static final String IMG_SUFFIX = ".gif";
 	private static final String CONF_SUFFIX = ".conf";
-	private static final String DRAMA_SUFFIX = ".ibd";
+	private static final String DRAMA_SUFFIX = ".drama";
 
-	private static final String IMG_STATUS_SPLIT = "#";
+	private static final String IMG_STATUS_SPLIT = "$";
 
 	@Override
-	public Response<byte[]> getCharacterImage(String characterId, String status) {
-		ValidUtil.resourceId(characterId);
+	public Response<byte[]> getCharacterImage(String characterCode, String status) {
+		ValidUtil.resourceId(characterCode);
 		if (!status.equals("")) {
 			status = IMG_STATUS_SPLIT + status;
 		}
-		return dealFileRequest(imgBasePath + idToPath(characterId) + status + IMG_SUFFIX);
+		return dealFileRequest(imgBasePath + idToPath(characterCode) + status + IMG_SUFFIX);
 	}
 
 	@Override
-	public Response<byte[]> getCharacterConf(String characterId) {
-		ValidUtil.resourceId(characterId);
-		return dealFileRequest(confBasePath + idToPath(characterId) + CONF_SUFFIX);
+	public Response<byte[]> getCharacterConf(String characterCode) {
+		ValidUtil.resourceId(characterCode);
+		return dealFileRequest(confBasePath + idToPath(characterCode) + CONF_SUFFIX);
 	}
 
 	@Override
-	public Response<byte[]> getDrama(String dramaId) {
-		ValidUtil.resourceId(dramaId);
-		return dealFileRequest(dramaBasePath + idToPath(dramaId) + DRAMA_SUFFIX);
+	public Response<byte[]> getDrama(String dramaCode) {
+		ValidUtil.resourceId(dramaCode);
+		return dealFileRequest(dramaBasePath + idToPath(dramaCode) + DRAMA_SUFFIX);
 	}
 
 	private static String idToPath(String id) {

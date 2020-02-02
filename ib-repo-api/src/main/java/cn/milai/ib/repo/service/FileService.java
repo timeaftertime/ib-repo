@@ -11,24 +11,24 @@ public interface FileService {
 
 	/**
 	 * 获取 character 对应 img 的数据
-	 * @param characterId
+	 * @param characterCode
 	 * @param status
 	 * @return
 	 */
-	Response<byte[]> getCharacterImage(String characterId, String status);
+	Response<byte[]> getCharacterImage(String characterCode, String status);
 
 	/**
 	 * 获取 character 对应 conf 的数据
-	 * @param characterId
+	 * @param characterCode
 	 * @return
 	 */
-	Response<byte[]> getCharacterConf(String characterId);
+	Response<byte[]> getCharacterConf(String characterCode);
 
 	/**
 	 * 获取 drama 的数据
-	 * @param dramaId
+	 * @param dramaCode
 	 * @return
 	 */
-	Response<byte[]> getDrama(String dramaId);
+	Response<byte[]> getDrama(String dramaCode);
 
 }

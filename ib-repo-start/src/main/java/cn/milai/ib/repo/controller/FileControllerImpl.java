@@ -28,26 +28,26 @@ public class FileControllerImpl implements FileController {
 
 	@Override
 	@GetMapping("/img")
-	public void getCharacterImage(HttpServletResponse response, String characterId, String status) {
+	public void getCharacterImage(HttpServletResponse response, String characterCode, String status) {
 		if (status == null) {
 			status = "";
 		}
-		dealFileRequest(response, characterId, fileService.getCharacterImage(characterId, status));
+		dealFileRequest(response, characterCode, fileService.getCharacterImage(characterCode, status));
 	}
 
 	@Override
 	@GetMapping("/conf")
-	public void getCharacterConf(HttpServletResponse response, String characterId) {
-		dealFileRequest(response, characterId, fileService.getCharacterConf(characterId));
+	public void getCharacterConf(HttpServletResponse response, String characterCode) {
+		dealFileRequest(response, characterCode, fileService.getCharacterConf(characterCode));
 	}
 
 	@Override
 	@GetMapping("/drama")
-	public void getDrama(HttpServletResponse response, String dramaId) {
-		dealFileRequest(response, dramaId, fileService.getDrama(dramaId));
+	public void getDrama(HttpServletResponse response, String dramaCode) {
+		dealFileRequest(response, dramaCode, fileService.getDrama(dramaCode));
 	}
 
-	private void dealFileRequest(HttpServletResponse response, String id, Response<byte[]> result) {
+	private void dealFileRequest(HttpServletResponse response, String code, Response<byte[]> result) {
 		if (!result.isSuccess()) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
@@ -55,7 +55,7 @@ public class FileControllerImpl implements FileController {
 		try {
 			response.getOutputStream().write(result.getData());
 		} catch (IOException e) {
-			log.error(String.format("返回文件失败，id = %s", id), e);
+			log.error(String.format("返回文件失败，code = %s", code), e);
 		}
 	}
 
