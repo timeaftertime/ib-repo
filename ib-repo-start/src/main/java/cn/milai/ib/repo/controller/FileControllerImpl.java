@@ -27,24 +27,15 @@ public class FileControllerImpl implements FileController {
 	private FileService fileService;
 
 	@Override
-	@GetMapping("/img")
-	public void getCharacterImage(HttpServletResponse response, String characterCode, String status) {
-		if (status == null) {
-			status = "";
-		}
-		dealFileRequest(response, characterCode, fileService.getCharacterImage(characterCode, status));
-	}
-
-	@Override
-	@GetMapping("/conf")
-	public void getCharacterConf(HttpServletResponse response, String characterCode) {
-		dealFileRequest(response, characterCode, fileService.getCharacterConf(characterCode));
-	}
-
-	@Override
 	@GetMapping("/drama")
 	public void getDrama(HttpServletResponse response, String dramaCode) {
 		dealFileRequest(response, dramaCode, fileService.getDrama(dramaCode));
+	}
+
+	@Override
+	@GetMapping("/dramaRes")
+	public void getDramaRes(HttpServletResponse response, String dramaCode) {
+		dealFileRequest(response, dramaCode, fileService.getDramaRes(dramaCode));
 	}
 
 	private void dealFileRequest(HttpServletResponse response, String code, Response<byte[]> result) {

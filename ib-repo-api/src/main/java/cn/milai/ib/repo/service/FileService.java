@@ -10,25 +10,17 @@ import cn.milai.ib.repo.model.Response;
 public interface FileService {
 
 	/**
-	 * 获取 character 对应 img 的数据
-	 * @param characterCode
-	 * @param status
-	 * @return
-	 */
-	Response<byte[]> getCharacterImage(String characterCode, String status);
-
-	/**
-	 * 获取 character 对应 conf 的数据
-	 * @param characterCode
-	 * @return
-	 */
-	Response<byte[]> getCharacterConf(String characterCode);
-
-	/**
 	 * 获取 drama 的数据
 	 * @param dramaCode
 	 * @return
 	 */
 	Response<byte[]> getDrama(String dramaCode);
+
+	/**
+	 * 获取 drama 的资源文件数据
+	 * @param dramaCode
+	 * @return
+	 */
+	Response<byte[]> getDramaRes(String dramaCode);
 
 }

@@ -21,38 +21,25 @@ import cn.milai.ib.repo.util.ValidUtil;
 @Service
 public class FileServiceImpl implements FileService {
 
-	@Value("${file.img.path}")
-	private String imgBasePath;
-	@Value("${file.conf.path}")
-	private String confBasePath;
 	@Value("${file.drama.path}")
 	private String dramaBasePath;
+	@Value("${file.drama.res.path}")
+	private String dramaResBasePath;
 
-	private static final String IMG_SUFFIX = ".gif";
-	private static final String CONF_SUFFIX = ".conf";
 	private static final String DRAMA_SUFFIX = ".drama";
 
-	private static final String IMG_STATUS_SPLIT = "$";
-
-	@Override
-	public Response<byte[]> getCharacterImage(String characterCode, String status) {
-		ValidUtil.resourceId(characterCode);
-		if (!status.equals("")) {
-			status = IMG_STATUS_SPLIT + status;
-		}
-		return dealFileRequest(imgBasePath + idToPath(characterCode) + status + IMG_SUFFIX);
-	}
-
-	@Override
-	public Response<byte[]> getCharacterConf(String characterCode) {
-		ValidUtil.resourceId(characterCode);
-		return dealFileRequest(confBasePath + idToPath(characterCode) + CONF_SUFFIX);
-	}
+	private static final String DRAMA_RES_SUFFIX = ".zip";
 
 	@Override
 	public Response<byte[]> getDrama(String dramaCode) {
 		ValidUtil.resourceId(dramaCode);
 		return dealFileRequest(dramaBasePath + idToPath(dramaCode) + DRAMA_SUFFIX);
+	}
+
+	@Override
+	public Response<byte[]> getDramaRes(String dramaCode) {
+		ValidUtil.resourceId(dramaCode);
+		return dealFileRequest(dramaResBasePath + dramaCode + DRAMA_RES_SUFFIX);
 	}
 
 	private static String idToPath(String id) {
