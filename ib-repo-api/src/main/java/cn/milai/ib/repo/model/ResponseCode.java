@@ -9,7 +9,7 @@ package cn.milai.ib.repo.model;
 public enum ResponseCode {
 
 	SUCCESS("SUCCESS", ""),
-	UNKNOWN_ERROR("UNKNOWN_ERROR", ""),
+	UNKNOWN_ERROR("UNKNOWN_ERROR", "系统异常"),
 	PARAM_INVALID("PARAM_INVALID", "%s"),
 	EMAIL_CODE_SENT("EMAIL_CODE_SENT", "已经发送过邮件，请等待 %s 秒再重试"),
 	RESOURCE_FILE_NOT_FOUND("RESOURCE_FILE_NOT_FOUND", "资源 %s 不存在"),
