@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring.version>2.2.4.RELEASE</spring.version>
+		<beginning.version>0.0.1-SNAPSHOT</beginning.version>
 		<ib.repo.version>0.0.1-SNAPSHOT</ib.repo.version>
 		<ib.repo.version>0.0.1-SNAPSHOT</ib.repo.version>
 		<lombok.version>1.18.8</lombok.version>
@@ -32,6 +33,11 @@
 				<groupId>cn.milai</groupId>
 				<artifactId>ib-repo-api</artifactId>
 				<version>${ib.repo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.milai</groupId>
+				<artifactId>beginning-api</artifactId>
+				<version>${beginning.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>

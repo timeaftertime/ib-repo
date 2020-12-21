@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import cn.milai.common.api.Resp;
+import cn.milai.ib.repo.IBRepoResp;
 import cn.milai.ib.repo.conf.RedisKey;
 import cn.milai.ib.repo.dao.UserDAO;
-import cn.milai.ib.repo.dao.model.UserDO;
+import cn.milai.ib.repo.dao.po.UserPO;
 import cn.milai.ib.repo.ex.EmailAlreadyExists;
 import cn.milai.ib.repo.ex.EmailValidCodeError;
 import cn.milai.ib.repo.ex.PasswordNotMatch;
 import cn.milai.ib.repo.ex.UsernameAlreadyExists;
 import cn.milai.ib.repo.ex.UsernameOrEmailRequired;
-import cn.milai.ib.repo.mapper.UserDOMapper;
-import cn.milai.ib.repo.model.Response;
-import cn.milai.ib.repo.model.ResponseCode;
-import cn.milai.ib.repo.service.req.UserLoginRequest;
-import cn.milai.ib.repo.service.req.UserRegisterRequest;
+import cn.milai.ib.repo.mapper.UserMapper;
+import cn.milai.ib.repo.service.dto.UserLoginDTO;
+import cn.milai.ib.repo.service.dto.UserRegisterDTO;
 import cn.milai.ib.repo.util.DigestUtil;
 import cn.milai.ib.repo.util.RandomUtil;
 
@@ -40,14 +40,14 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDAO;
 	@Autowired
-	private UserDOMapper userDOMapper;
+	private UserMapper userMapper;
 
 	@Override
-	public Response<String> login(UserLoginRequest req) {
+	public Resp<String> login(UserLoginDTO req) {
 		if (req.getUsername() == null && req.getEmail() == null) {
 			throw new UsernameOrEmailRequired();
 		}
-		UserDO user = null;
+		UserPO user = null;
 		if (req.getUsername() != null) {
 			user = userDAO.selectByUsername(req.getUsername());
 		} else if (req.getEmail() != null) {
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 		if (!DigestUtil.sha256(req.getPassword()).equals(user.getPassword())) {
 			throw new PasswordNotMatch();
 		}
-		return Response.success(createToken(user.getId()));
+		return Resp.success(createToken(user.getId()));
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Response<String> register(UserRegisterRequest req) {
+	public Resp<String> register(UserRegisterDTO req) {
 		String key = RedisKey.EMAIL_TO_VALIDATE_CODE + req.getEmail();
 		if (!req.getValidateCode().equalsIgnoreCase(redis.opsForValue().get(key))) {
 			throw new EmailValidCodeError(req.getEmail());
@@ -105,9 +105,9 @@ public class UserServiceImpl implements UserService {
 		checkEmailExists(req.getEmail());
 		// 检查完后出现的异步问题由数据库一致性来解决，不再加锁
 		req.setPassword(DigestUtil.sha256(req.getPassword()));
-		UserDO user = userDOMapper.toDO(req);
+		UserPO user = userMapper.toDO(req);
 		userDAO.insertUser(user);
-		return Response.success(createToken(user.getId()));
+		return Resp.success(createToken(user.getId()));
 	}
 
 	private void checkUsernameExists(String username) {
@@ -123,12 +123,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Response<Void> sendValidateEmail(String email) {
+	public Resp<Void> sendValidateEmail(String email) {
 		String lockKey = RedisKey.EMAIL_SENT_LOCK + email;
 		if (!redis.opsForValue().setIfAbsent(lockKey, "")) {
 			// 防止设置锁过期时间失败而一直无法被解锁
 			redis.expire(lockKey, Long.min(redis.getExpire(lockKey), EMAIL_SENT_WAIT_SECONDS), TimeUnit.SECONDS);
-			return Response.fail(ResponseCode.EMAIL_CODE_SENT, String.valueOf(redis.getExpire(lockKey)));
+			return Resp.fail(IBRepoResp.EMAIL_CODE_SENT, String.valueOf(redis.getExpire(lockKey)));
 		}
 		redis.expire(lockKey, EMAIL_SENT_WAIT_SECONDS, TimeUnit.SECONDS);
 		checkEmailExists(email);
@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
 		// TODO 发送邮件
 		redis.opsForValue().set(key, value);
 		redis.expire(lockKey, VALIDATECODE_VALID_MINUTES, TimeUnit.MINUTES);
-		return Response.success();
+		return Resp.success();
 	}
 
 }

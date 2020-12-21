@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.milai.common.api.Resp;
 import cn.milai.ib.repo.conf.CookieKey;
+import cn.milai.ib.repo.controller.vo.UserVO;
+import cn.milai.ib.repo.controller.vo.UserVO.LoginGroup;
+import cn.milai.ib.repo.controller.vo.UserVO.RegisterGroup;
 import cn.milai.ib.repo.mapper.UserMapper;
-import cn.milai.ib.repo.model.Response;
-import cn.milai.ib.repo.model.vo.UserVO;
-import cn.milai.ib.repo.model.vo.UserVO.LoginGroup;
-import cn.milai.ib.repo.model.vo.UserVO.RegisterGroup;
 import cn.milai.ib.repo.service.UserService;
 import cn.milai.ib.repo.util.ValidUtil;
 
@@ -34,33 +34,33 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	@PostMapping(value = "/login")
-	public Response<Void> login(@Validated(LoginGroup.class) UserVO user, HttpServletResponse response) {
+	public Resp<Void> login(@Validated(LoginGroup.class) UserVO user, HttpServletResponse response) {
 		ValidUtil.email(user.getEmail(), false);
-		Response<String> result = userService.login(userMapper.toLogin(user));
+		Resp<String> result = userService.login(userMapper.toLogin(user));
 		if (!result.isSuccess()) {
-			return new Response<>(result.getCode(), result.getDesc(), null);
+			return Resp.fail(result);
 		}
 		String token = result.getData();
 		response.addCookie(new Cookie(CookieKey.TOKEN, token));
-		return Response.success();
+		return Resp.success();
 	}
 
 	@Override
 	@PostMapping(value = "/register")
-	public Response<Void> register(@Validated(RegisterGroup.class) UserVO user, HttpServletResponse response) {
+	public Resp<Void> register(@Validated(RegisterGroup.class) UserVO user, HttpServletResponse response) {
 		ValidUtil.email(user.getEmail(), true);
-		Response<String> result = userService.register(userMapper.toRegister(user));
+		Resp<String> result = userService.register(userMapper.toRegister(user));
 		if (!result.isSuccess()) {
-			return new Response<>(result.getCode(), result.getDesc(), null);
+			return Resp.fail(result);
 		}
 		String token = result.getData();
 		response.addCookie(new Cookie(CookieKey.TOKEN, token));
-		return Response.success();
+		return Resp.success();
 	}
 
 	@Override
 	@PostMapping(value = "/sendValidateCode")
-	public Response<Void> sendValidateCode(String email) {
+	public Resp<Void> sendValidateCode(String email) {
 		ValidUtil.email(email);
 		return userService.sendValidateEmail(email);
 	}

@@ -1,6 +1,6 @@
 package cn.milai.ib.repo.service;
 
-import cn.milai.ib.repo.model.Response;
+import cn.milai.common.api.Resp;
 
 /**
  * File 相关接口 Service
@@ -14,13 +14,13 @@ public interface FileService {
 	 * @param dramaCode
 	 * @return
 	 */
-	Response<byte[]> getDrama(String dramaCode);
+	Resp<byte[]> getDrama(String dramaCode);
 
 	/**
 	 * 获取 drama 的资源文件数据
 	 * @param dramaCode
 	 * @return
 	 */
-	Response<byte[]> getDramaRes(String dramaCode);
+	Resp<byte[]> getDramaRes(String dramaCode);
 
 }

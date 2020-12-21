@@ -1,20 +1,18 @@
-package cn.milai.ib.repo.service.req;
+package cn.milai.ib.repo.service.dto;
 
 import lombok.Data;
 
 /**
- * 用户注册请求数据模型
+ * 用户登录请求数据模型
  * 2020.01.28
  * @author milai
  */
 @Data
-public class UserRegisterRequest {
+public class UserLoginDTO {
 
 	private String username;
 
 	private String email;
 
 	private String password;
-
-	private String validateCode;
 }

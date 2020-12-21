@@ -9,8 +9,8 @@ import java.io.InputStream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import cn.milai.ib.repo.model.Response;
-import cn.milai.ib.repo.model.ResponseCode;
+import cn.milai.common.api.Resp;
+import cn.milai.ib.repo.IBRepoResp;
 import cn.milai.ib.repo.util.ValidUtil;
 
 /**
@@ -31,13 +31,13 @@ public class FileServiceImpl implements FileService {
 	private static final String DRAMA_RES_SUFFIX = ".zip";
 
 	@Override
-	public Response<byte[]> getDrama(String dramaCode) {
+	public Resp<byte[]> getDrama(String dramaCode) {
 		ValidUtil.resourceId(dramaCode);
 		return dealFileRequest(dramaBasePath + idToPath(dramaCode) + DRAMA_SUFFIX);
 	}
 
 	@Override
-	public Response<byte[]> getDramaRes(String dramaCode) {
+	public Resp<byte[]> getDramaRes(String dramaCode) {
 		ValidUtil.resourceId(dramaCode);
 		return dealFileRequest(dramaResBasePath + dramaCode + DRAMA_RES_SUFFIX);
 	}
@@ -46,10 +46,10 @@ public class FileServiceImpl implements FileService {
 		return id.replace('.', '/');
 	}
 
-	private Response<byte[]> dealFileRequest(String fileName) {
+	private Resp<byte[]> dealFileRequest(String fileName) {
 		File file = new File(fileName);
 		if (!file.exists()) {
-			return Response.fail(ResponseCode.RESOURCE_FILE_NOT_FOUND, fileName);
+			return Resp.fail(IBRepoResp.RESOURCE_FILE_NOT_FOUND, fileName);
 		}
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
@@ -61,9 +61,9 @@ public class FileServiceImpl implements FileService {
 			}
 			in.close();
 		} catch (IOException e) {
-			Response.fail(ResponseCode.READ_RESOURCE_FILE_FAILED, fileName);
+			Resp.fail(IBRepoResp.READ_RESOURCE_FILE_FAILED, fileName);
 		}
-		return Response.success(out.toByteArray());
+		return Resp.success(out.toByteArray());
 	}
 
 }

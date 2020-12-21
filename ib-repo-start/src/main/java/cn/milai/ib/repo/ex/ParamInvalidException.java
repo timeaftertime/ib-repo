@@ -1,6 +1,6 @@
 package cn.milai.ib.repo.ex;
 
-import cn.milai.ib.repo.model.ResponseCode;
+import cn.milai.ib.repo.IBRepoResp;
 
 /**
  * 参数不合法的异常
@@ -15,7 +15,7 @@ public class ParamInvalidException extends IBRepoException {
 	private static final long serialVersionUID = 1L;
 
 	public ParamInvalidException(String desc) {
-		super(ResponseCode.PARAM_INVALID.getCode(), desc);
+		super(IBRepoResp.PARAM_INVALID.getCode(), desc);
 	}
 
 }

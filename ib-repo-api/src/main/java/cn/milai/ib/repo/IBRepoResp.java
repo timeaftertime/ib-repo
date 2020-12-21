@@ -1,14 +1,15 @@
-package cn.milai.ib.repo.model;
+package cn.milai.ib.repo;
+
+import cn.milai.common.api.RespCode;
 
 /**
- * Controller 返回码枚举 
+ * 返回状态枚举 
  * create 2020.01.27
  * 
  * @author milai
  */
-public enum ResponseCode {
+public enum IBRepoResp implements RespCode {
 
-	SUCCESS("SUCCESS", ""),
 	UNKNOWN_ERROR("UNKNOWN_ERROR", "系统异常"),
 	PARAM_INVALID("PARAM_INVALID", "%s"),
 	EMAIL_CODE_SENT("EMAIL_CODE_SENT", "已经发送过邮件，请等待 %s 秒再重试"),
@@ -19,21 +20,23 @@ public enum ResponseCode {
 	private String code;
 	private String desc;
 
-	ResponseCode(String code, String desc) {
+	IBRepoResp(String code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
+	@Override
 	public String getCode() {
 		return code;
 	}
 
+	@Override
 	public String getDesc() {
 		return desc;
 	}
 
-	public static ResponseCode findByCode(String code) {
-		for (ResponseCode response : ResponseCode.values()) {
+	public static IBRepoResp findByCode(String code) {
+		for (IBRepoResp response : IBRepoResp.values()) {
 			if (response.code.equals(code)) {
 				return response;
 			}
@@ -41,8 +44,8 @@ public enum ResponseCode {
 		return null;
 	}
 
-	public static ResponseCode of(String code) {
-		ResponseCode response = findByCode(code);
+	public static IBRepoResp of(String code) {
+		IBRepoResp response = findByCode(code);
 		if (response == null) {
 			throw new IllegalArgumentException(String.format("%s 不是合法的 ResponseCode", code));
 		}

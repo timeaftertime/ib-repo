@@ -10,6 +10,6 @@ public class CookieKey {
 	/**
 	 * 用户 Token
 	 */
-	public static final String TOKEN = "IB_REPO_TOKEN";
+	public static final String TOKEN = "IB_TOKEN";
 
 }

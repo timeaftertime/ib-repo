@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import cn.milai.ib.repo.model.Response;
+import cn.milai.common.api.Resp;
 import cn.milai.ib.repo.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +38,7 @@ public class FileControllerImpl implements FileController {
 		dealFileRequest(response, dramaCode, fileService.getDramaRes(dramaCode));
 	}
 
-	private void dealFileRequest(HttpServletResponse response, String code, Response<byte[]> result) {
+	private void dealFileRequest(HttpServletResponse response, String code, Resp<byte[]> result) {
 		if (!result.isSuccess()) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;

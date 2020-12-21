@@ -6,9 +6,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import cn.milai.common.api.Resp;
+import cn.milai.ib.repo.IBRepoResp;
 import cn.milai.ib.repo.ex.IBRepoException;
-import cn.milai.ib.repo.model.Response;
-import cn.milai.ib.repo.model.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,10 +31,10 @@ public class ServiceExceptionHandler {
 			return point.proceed();
 		} catch (IBRepoException e) {
 			log.info(point.toShortString() + " " + e.getDesc(), e);
-			return Response.fail(ResponseCode.of(e.getCode()), e.getDesc());
+			return Resp.fail(e.getCode(), e.getDesc());
 		} catch (Throwable e) {
 			log.info("未知异常", e);
-			return Response.fail(ResponseCode.UNKNOWN_ERROR);
+			return Resp.fail(IBRepoResp.UNKNOWN_ERROR);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package cn.milai.ib.repo.ex;
 
-import cn.milai.ib.repo.model.ResponseCode;
+import cn.milai.ib.repo.IBRepoResp;
 
 /**
  * ib-repo 所有异常类的基类
@@ -22,7 +22,7 @@ public class IBRepoException extends RuntimeException {
 		this.desc = desc;
 	}
 
-	public IBRepoException(ResponseCode response) {
+	public IBRepoException(IBRepoResp response) {
 		this(response.getCode(), response.getDesc());
 	}
 

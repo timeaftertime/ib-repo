@@ -1,4 +1,4 @@
-package cn.milai.ib.repo.dao.model;
+package cn.milai.ib.repo.dao.po;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @author milai
  */
 @Data
-public class UserDO {
+public class UserPO {
 
 	private long id;
 

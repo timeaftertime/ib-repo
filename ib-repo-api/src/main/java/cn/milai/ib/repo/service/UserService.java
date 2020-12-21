@@ -1,8 +1,8 @@
 package cn.milai.ib.repo.service;
 
-import cn.milai.ib.repo.model.Response;
-import cn.milai.ib.repo.service.req.UserLoginRequest;
-import cn.milai.ib.repo.service.req.UserRegisterRequest;
+import cn.milai.common.api.Resp;
+import cn.milai.ib.repo.service.dto.UserLoginDTO;
+import cn.milai.ib.repo.service.dto.UserRegisterDTO;
 
 /**
  * 用户相关接口 Service
@@ -16,19 +16,19 @@ public interface UserService {
 	 * @param req
 	 * @return
 	 */
-	Response<String> login(UserLoginRequest req);
+	Resp<String> login(UserLoginDTO req);
 
 	/**
 	 * 注册，若成功，返回登录后的 token
 	 * @param req
 	 * @return
 	 */
-	Response<String> register(UserRegisterRequest req);
+	Resp<String> register(UserRegisterDTO req);
 
 	/**
 	 * 向 email 发送带有验证码的邮件
 	 * @param email
 	 * @return
 	 */
-	Response<Void> sendValidateEmail(String email);
+	Resp<Void> sendValidateEmail(String email);
 }

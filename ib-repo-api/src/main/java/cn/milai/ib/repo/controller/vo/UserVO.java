@@ -1,4 +1,4 @@
-package cn.milai.ib.repo.model.vo;
+package cn.milai.ib.repo.controller.vo;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
