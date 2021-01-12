@@ -7,6 +7,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import cn.milai.common.api.Resp;
+import cn.milai.common.util.Digests;
+import cn.milai.common.util.Randoms;
 import cn.milai.ibrepo.IBRepoResp;
 import cn.milai.ibrepo.conf.RedisKey;
 import cn.milai.ibrepo.dao.UserDAO;
@@ -17,11 +19,8 @@ import cn.milai.ibrepo.ex.PasswordNotMatch;
 import cn.milai.ibrepo.ex.UsernameAlreadyExists;
 import cn.milai.ibrepo.ex.UsernameOrEmailRequired;
 import cn.milai.ibrepo.mapper.UserMapper;
-import cn.milai.ibrepo.service.UserService;
 import cn.milai.ibrepo.service.dto.UserLoginDTO;
 import cn.milai.ibrepo.service.dto.UserRegisterDTO;
-import cn.milai.ibrepo.util.DigestUtil;
-import cn.milai.ibrepo.util.RandomUtil;
 
 /**
  * UserService 默认实现
@@ -38,6 +37,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RedisTemplate<String, String> redis;
+	@Autowired
+	private RedisKey redisKey;
 	@Autowired
 	private UserDAO userDAO;
 	@Autowired
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			throw new PasswordNotMatch();
 		}
-		if (!DigestUtil.sha256(req.getPassword()).equals(user.getPassword())) {
+		if (!Digests.sha256(req.getPassword()).equals(user.getPassword())) {
 			throw new PasswordNotMatch();
 		}
 		return Resp.success(createToken(user.getId()));
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	private boolean trySetToken(String token, long userId) {
-		return redis.opsForValue().setIfAbsent(RedisKey.TOKEN_TO_ID + token, String.valueOf(userId)) != null;
+		return redis.opsForValue().setIfAbsent(redisKey.tokenToId(token), String.valueOf(userId)) != null;
 	}
 
 	/**
@@ -92,12 +93,12 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	private String nextToken(long userId) {
-		return DigestUtil.sha256(RandomUtil.randString(4) + System.nanoTime() + userId).substring(0, TOKEN_LENGTH);
+		return Digests.sha256(Randoms.randLowerOrDigit(4) + System.nanoTime() + userId).substring(0, TOKEN_LENGTH);
 	}
 
 	@Override
 	public Resp<String> register(UserRegisterDTO req) {
-		String key = RedisKey.EMAIL_TO_VALIDATE_CODE + req.getEmail();
+		String key = redisKey.emailAuthCode(req.getEmail());
 		if (!req.getValidateCode().equalsIgnoreCase(redis.opsForValue().get(key))) {
 			throw new EmailValidCodeError(req.getEmail());
 		}
@@ -105,7 +106,7 @@ public class UserServiceImpl implements UserService {
 		checkUsernameExists(req.getUsername());
 		checkEmailExists(req.getEmail());
 		// 检查完后出现的异步问题由数据库一致性来解决，不再加锁
-		req.setPassword(DigestUtil.sha256(req.getPassword()));
+		req.setPassword(Digests.sha256(req.getPassword()));
 		UserPO user = userMapper.toDO(req);
 		userDAO.insertUser(user);
 		return Resp.success(createToken(user.getId()));
@@ -125,7 +126,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Resp<Void> sendValidateEmail(String email) {
-		String lockKey = RedisKey.EMAIL_SENT_LOCK + email;
+		String lockKey = redisKey.emailSentLock(email);
 		if (!redis.opsForValue().setIfAbsent(lockKey, "")) {
 			// 防止设置锁过期时间失败而一直无法被解锁
 			redis.expire(lockKey, Long.min(redis.getExpire(lockKey), EMAIL_SENT_WAIT_SECONDS), TimeUnit.SECONDS);
@@ -133,8 +134,8 @@ public class UserServiceImpl implements UserService {
 		}
 		redis.expire(lockKey, EMAIL_SENT_WAIT_SECONDS, TimeUnit.SECONDS);
 		checkEmailExists(email);
-		String key = RedisKey.EMAIL_TO_VALIDATE_CODE + email;
-		String value = RandomUtil.randString(VALICODE_LENGTH);
+		String key = redisKey.emailAuthCode(email);
+		String value = Randoms.randLowerOrDigit(VALICODE_LENGTH);
 		// TODO 发送邮件
 		redis.opsForValue().set(key, value);
 		redis.expire(lockKey, VALIDATECODE_VALID_MINUTES, TimeUnit.MINUTES);

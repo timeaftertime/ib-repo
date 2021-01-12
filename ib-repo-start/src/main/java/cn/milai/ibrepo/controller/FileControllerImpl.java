@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.milai.common.api.Resp;
-import cn.milai.ibrepo.controller.FileController;
 import cn.milai.ibrepo.service.FileService;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,23 +1,44 @@
 package cn.milai.ibrepo.conf;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
- * 生成 Redis key 的常量类
+ * 用户生成 Redis key 工具类
  * 2020.01.28
  * @author milai
  */
-public abstract class RedisKey {
+@Component
+public class RedisKey {
 
-	private RedisKey() {
+	@Value("${spring.application.name}")
+	private String appName;
 
+	/**
+	 * 邮箱验证码
+	 * @param code
+	 * @return
+	 */
+	public String emailAuthCode(String code) {
+		return String.format("%s|emailAuthCode|%s", appName, code);
 	}
 
-	public static final String EMAIL_TO_VALIDATE_CODE = "email.validate.code|";
-
-	public static final String TOKEN_TO_ID = "token.id|";
-	
 	/**
-	 * 已经发送邮箱验证码而暂时不能获取下一条邮件的锁 key
+	 * token 对应的 userId 
+	 * @param token
+	 * @return
 	 */
-	public static final String EMAIL_SENT_LOCK = "email.sent.lock|";
+	public String tokenToId(String token) {
+		return String.format("%s|tokenToId|%s", appName, token);
+	}
+
+	/**
+	 * 一定时间内已经发送过验证邮件的邮箱
+	 * @param email
+	 * @return
+	 */
+	public String emailSentLock(String email) {
+		return String.format("%s|emailSentLock|%s", appName, email);
+	}
 
 }

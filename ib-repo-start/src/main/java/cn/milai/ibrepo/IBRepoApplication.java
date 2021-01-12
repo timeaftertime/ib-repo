@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @SpringBootApplication
-public class IBRepoApp {
+public class IBRepoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(IBRepoApp.class, args);
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(IBRepoApplication.class, args);
 	}
 
 }

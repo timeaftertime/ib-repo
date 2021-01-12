@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.IBRepoResp;
-import cn.milai.ibrepo.service.FileService;
 import cn.milai.ibrepo.util.ValidUtil;
 
 /**
@@ -22,9 +21,9 @@ import cn.milai.ibrepo.util.ValidUtil;
 @Service
 public class FileServiceImpl implements FileService {
 
-	@Value("${file.drama.path}")
+	@Value("${ibrepo.filepath.drama}")
 	private String dramaBasePath;
-	@Value("${file.drama.res.path}")
+	@Value("${ibrepo.filepath.drama-res}")
 	private String dramaResBasePath;
 
 	private static final String DRAMA_SUFFIX = ".drama";

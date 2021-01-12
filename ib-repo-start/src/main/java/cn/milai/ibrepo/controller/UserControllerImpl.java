@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.conf.CookieKey;
-import cn.milai.ibrepo.controller.UserController;
 import cn.milai.ibrepo.controller.vo.UserVO;
 import cn.milai.ibrepo.controller.vo.UserVO.LoginGroup;
 import cn.milai.ibrepo.controller.vo.UserVO.RegisterGroup;
