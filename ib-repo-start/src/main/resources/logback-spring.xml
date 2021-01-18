@@ -102,6 +102,6 @@
 	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
 	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" value="DEBUG" />
 	<logger name="org.springframework.web" level="DEBUG" />
-	<logger name="cn.milai.ib.repo" level="DEBUG" />
+	<logger name="cn.milai.ibrepo" level="DEBUG" />
 
 </configuration>
