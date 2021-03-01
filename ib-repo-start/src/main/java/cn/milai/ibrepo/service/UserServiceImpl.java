@@ -7,8 +7,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import cn.milai.common.api.Resp;
-import cn.milai.common.util.Digests;
-import cn.milai.common.util.Randoms;
+import cn.milai.common.base.Digests;
+import cn.milai.common.base.Randoms;
 import cn.milai.ibrepo.IBRepoResp;
 import cn.milai.ibrepo.conf.RedisKey;
 import cn.milai.ibrepo.dao.UserDAO;
