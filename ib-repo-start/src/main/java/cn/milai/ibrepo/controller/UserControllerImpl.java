@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.milai.common.api.Mappers;
 import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.conf.CookieKey;
 import cn.milai.ibrepo.controller.vo.UserVO;
 import cn.milai.ibrepo.controller.vo.UserVO.LoginGroup;
 import cn.milai.ibrepo.controller.vo.UserVO.RegisterGroup;
-import cn.milai.ibrepo.mapper.UserMapper;
 import cn.milai.ibrepo.service.UserService;
+import cn.milai.ibrepo.service.dto.UserLoginDTO;
+import cn.milai.ibrepo.service.dto.UserRegisterDTO;
 import cn.milai.ibrepo.util.ValidUtil;
 
 /**
@@ -29,14 +31,12 @@ public class UserControllerImpl implements UserController {
 
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private UserMapper userMapper;
 
 	@Override
 	@PostMapping(value = "/login")
 	public Resp<Void> login(@Validated(LoginGroup.class) UserVO user, HttpServletResponse response) {
 		ValidUtil.email(user.getEmail(), false);
-		Resp<String> result = userService.login(userMapper.toLogin(user));
+		Resp<String> result = userService.login(Mappers.map(user, UserLoginDTO.class));
 		if (!result.isSuccess()) {
 			return Resp.fail(result);
 		}
@@ -49,7 +49,7 @@ public class UserControllerImpl implements UserController {
 	@PostMapping(value = "/register")
 	public Resp<Void> register(@Validated(RegisterGroup.class) UserVO user, HttpServletResponse response) {
 		ValidUtil.email(user.getEmail(), true);
-		Resp<String> result = userService.register(userMapper.toRegister(user));
+		Resp<String> result = userService.register(Mappers.map(user, UserRegisterDTO.class));
 		if (!result.isSuccess()) {
 			return Resp.fail(result);
 		}

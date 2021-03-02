@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import cn.milai.common.api.Mappers;
 import cn.milai.common.api.Resp;
 import cn.milai.common.base.Digests;
 import cn.milai.common.base.Randoms;
@@ -18,7 +19,6 @@ import cn.milai.ibrepo.ex.EmailValidCodeError;
 import cn.milai.ibrepo.ex.PasswordNotMatch;
 import cn.milai.ibrepo.ex.UsernameAlreadyExists;
 import cn.milai.ibrepo.ex.UsernameOrEmailRequired;
-import cn.milai.ibrepo.mapper.UserMapper;
 import cn.milai.ibrepo.service.dto.UserLoginDTO;
 import cn.milai.ibrepo.service.dto.UserRegisterDTO;
 
@@ -41,8 +41,6 @@ public class UserServiceImpl implements UserService {
 	private RedisKey redisKey;
 	@Autowired
 	private UserDAO userDAO;
-	@Autowired
-	private UserMapper userMapper;
 
 	@Override
 	public Resp<String> login(UserLoginDTO req) {
@@ -93,7 +91,7 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	private String nextToken(long userId) {
-		return Digests.sha256(Randoms.randLowerOrDigit(4) + System.nanoTime() + userId).substring(0, TOKEN_LENGTH);
+		return Digests.sha256(Randoms.fixedLowerDigit(4) + System.nanoTime() + userId).substring(0, TOKEN_LENGTH);
 	}
 
 	@Override
@@ -107,7 +105,7 @@ public class UserServiceImpl implements UserService {
 		checkEmailExists(req.getEmail());
 		// 检查完后出现的异步问题由数据库一致性来解决，不再加锁
 		req.setPassword(Digests.sha256(req.getPassword()));
-		UserPO user = userMapper.toDO(req);
+		UserPO user = Mappers.map(req, UserPO.class);
 		userDAO.insertUser(user);
 		return Resp.success(createToken(user.getId()));
 	}
@@ -135,7 +133,7 @@ public class UserServiceImpl implements UserService {
 		redis.expire(lockKey, EMAIL_SENT_WAIT_SECONDS, TimeUnit.SECONDS);
 		checkEmailExists(email);
 		String key = redisKey.emailAuthCode(email);
-		String value = Randoms.randLowerOrDigit(VALICODE_LENGTH);
+		String value = Randoms.fixedLowerDigit(VALICODE_LENGTH);
 		// TODO 发送邮件
 		redis.opsForValue().set(key, value);
 		redis.expire(lockKey, VALIDATECODE_VALID_MINUTES, TimeUnit.MINUTES);

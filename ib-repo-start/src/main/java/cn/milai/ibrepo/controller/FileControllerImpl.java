@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.service.FileService;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * FileController 默认实现
  * @author milai
  * @date 2020.02.01
  */
-@Slf4j
 @Controller
 @RequestMapping("/file")
 public class FileControllerImpl implements FileController {
+
+	private static final Logger LOG = LoggerFactory.getLogger(FileControllerImpl.class);
 
 	@Autowired
 	private FileService fileService;
@@ -46,7 +48,7 @@ public class FileControllerImpl implements FileController {
 		try {
 			response.getOutputStream().write(result.getData());
 		} catch (IOException e) {
-			log.error(String.format("返回文件失败，code = %s", code), e);
+			LOG.error(String.format("返回文件失败，code = %s", code), e);
 		}
 	}
 

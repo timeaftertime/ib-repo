@@ -33,7 +33,7 @@ public abstract class ValidUtil {
 	}
 
 	public static void resourceId(String value) {
-		pattern("characterId", value, RESOURCE_ID_PATTERN, true);
+		pattern("resourceId", value, RESOURCE_ID_PATTERN, true);
 	}
 
 	/**

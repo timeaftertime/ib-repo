@@ -6,11 +6,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.IBRepoResp;
+import cn.milai.ibrepo.conf.IBRepoFileConf;
 import cn.milai.ibrepo.util.ValidUtil;
 
 /**
@@ -21,10 +22,8 @@ import cn.milai.ibrepo.util.ValidUtil;
 @Service
 public class FileServiceImpl implements FileService {
 
-	@Value("${ibrepo.filepath.drama}")
-	private String dramaBasePath;
-	@Value("${ibrepo.filepath.drama-res}")
-	private String dramaResBasePath;
+	@Autowired
+	private IBRepoFileConf conf;
 
 	private static final String DRAMA_SUFFIX = ".drama";
 
@@ -33,13 +32,13 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public Resp<byte[]> getDrama(String dramaCode) {
 		ValidUtil.resourceId(dramaCode);
-		return dealFileRequest(dramaBasePath + idToPath(dramaCode) + DRAMA_SUFFIX);
+		return dealFileRequest(conf.getDrama() + idToPath(dramaCode) + DRAMA_SUFFIX);
 	}
 
 	@Override
 	public Resp<byte[]> getDramaRes(String dramaCode) {
 		ValidUtil.resourceId(dramaCode);
-		return dealFileRequest(dramaResBasePath + dramaCode + DRAMA_RES_SUFFIX);
+		return dealFileRequest(conf.getDramaRes() + dramaCode + DRAMA_RES_SUFFIX);
 	}
 
 	private static String idToPath(String id) {
