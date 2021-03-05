@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.milai.common.api.Mappers;
-import cn.milai.common.api.Resp;
+import cn.milai.common.decoupling.Resp;
+import cn.milai.common.decoupling.map.Mappers;
 import cn.milai.ibrepo.conf.CookieKey;
 import cn.milai.ibrepo.controller.vo.UserVO;
 import cn.milai.ibrepo.controller.vo.UserVO.LoginGroup;
@@ -36,7 +36,7 @@ public class UserControllerImpl implements UserController {
 	@PostMapping(value = "/login")
 	public Resp<Void> login(@Validated(LoginGroup.class) UserVO user, HttpServletResponse response) {
 		ValidUtil.email(user.getEmail(), false);
-		Resp<String> result = userService.login(Mappers.map(user, UserLoginDTO.class));
+		Resp<String> result = userService.login(Mappers.deep(user, UserLoginDTO.class));
 		if (!result.isSuccess()) {
 			return Resp.fail(result);
 		}
@@ -49,7 +49,7 @@ public class UserControllerImpl implements UserController {
 	@PostMapping(value = "/register")
 	public Resp<Void> register(@Validated(RegisterGroup.class) UserVO user, HttpServletResponse response) {
 		ValidUtil.email(user.getEmail(), true);
-		Resp<String> result = userService.register(Mappers.map(user, UserRegisterDTO.class));
+		Resp<String> result = userService.register(Mappers.deep(user, UserRegisterDTO.class));
 		if (!result.isSuccess()) {
 			return Resp.fail(result);
 		}

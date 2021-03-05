@@ -58,7 +58,7 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.milai</groupId>
-				<artifactId>beginning-api</artifactId>
+				<artifactId>beginning-decoupling</artifactId>
 				<version>${beginning.version}</version>
 			</dependency>
 			<dependency>

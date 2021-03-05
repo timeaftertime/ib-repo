@@ -1,6 +1,6 @@
 package cn.milai.ibrepo;
 
-import cn.milai.common.api.RespCode;
+import cn.milai.common.decoupling.RespCode;
 
 /**
  * 返回状态枚举 

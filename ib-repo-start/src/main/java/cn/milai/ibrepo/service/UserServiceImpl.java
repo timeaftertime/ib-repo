@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import cn.milai.common.api.Mappers;
-import cn.milai.common.api.Resp;
 import cn.milai.common.base.Digests;
 import cn.milai.common.base.Randoms;
+import cn.milai.common.decoupling.Resp;
+import cn.milai.common.decoupling.map.Mappers;
 import cn.milai.ibrepo.IBRepoResp;
 import cn.milai.ibrepo.conf.RedisKey;
 import cn.milai.ibrepo.dao.UserDAO;
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
 		checkEmailExists(req.getEmail());
 		// 检查完后出现的异步问题由数据库一致性来解决，不再加锁
 		req.setPassword(Digests.sha256(req.getPassword()));
-		UserPO user = Mappers.map(req, UserPO.class);
+		UserPO user = Mappers.deep(req, UserPO.class);
 		userDAO.insertUser(user);
 		return Resp.success(createToken(user.getId()));
 	}

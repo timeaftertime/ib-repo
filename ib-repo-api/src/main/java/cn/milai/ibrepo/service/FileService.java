@@ -1,6 +1,6 @@
 package cn.milai.ibrepo.service;
 
-import cn.milai.common.api.Resp;
+import cn.milai.common.decoupling.Resp;
 
 /**
  * File 相关接口 Service

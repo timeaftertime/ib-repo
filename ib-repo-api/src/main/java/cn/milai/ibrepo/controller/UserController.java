@@ -2,7 +2,7 @@ package cn.milai.ibrepo.controller;
 
 import javax.servlet.http.HttpServletResponse;
 
-import cn.milai.common.api.Resp;
+import cn.milai.common.decoupling.Resp;
 import cn.milai.ibrepo.controller.vo.UserVO;
 
 /**
