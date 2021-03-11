@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.milai</groupId>
 	<artifactId>ib-repo</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>ib-repo</name>
 	<packaging>pom</packaging>
 
@@ -20,8 +20,8 @@
 	</modules>
 
 	<properties>
-		<beginning.version>0.0.2</beginning.version>
-		<ib.repo.version>0.0.1</ib.repo.version>
+		<beginning.version>0.0.3-SNAPSHOT</beginning.version>
+		<ib.repo.version>0.0.2-SNAPSHOT</ib.repo.version>
 		<mysql.driver.version>8.0.18</mysql.driver.version>
 		<mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
 		<jedis.version>3.2.0</jedis.version>
