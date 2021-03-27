@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cn.milai</groupId>
-	<artifactId>ib-repo</artifactId>
+	<groupId>cn.milai.ibrepo</groupId>
+	<artifactId>ib-repo-parent</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<name>ib-repo</name>
 	<packaging>pom</packaging>
@@ -52,17 +52,22 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>cn.milai</groupId>
+				<groupId>cn.milai.ibrepo</groupId>
 				<artifactId>ib-repo-api</artifactId>
 				<version>${ib.repo.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>cn.milai</groupId>
+				<groupId>cn.milai.ibrepo</groupId>
+				<artifactId>ib-repo-start</artifactId>
+				<version>${ib.repo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.milai.beginning</groupId>
 				<artifactId>beginning-decoupling</artifactId>
 				<version>${beginning.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>cn.milai</groupId>
+				<groupId>cn.milai.beginning</groupId>
 				<artifactId>beginning-base</artifactId>
 				<version>${beginning.version}</version>
 			</dependency>
@@ -80,17 +85,6 @@
 				<groupId>redis.clients</groupId>
 				<artifactId>jedis</artifactId>
 				<version>${jedis.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mapstruct</groupId>
-				<artifactId>mapstruct-jdk8</artifactId>
-				<version>${mapstruct.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mapstruct</groupId>
-				<artifactId>mapstruct-processor</artifactId>
-				<version>${mapstruct.version}</version>
-				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>javax.inject</groupId>
