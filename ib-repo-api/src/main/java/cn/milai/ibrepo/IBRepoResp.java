@@ -10,41 +10,37 @@ import cn.milai.common.decoupling.RespCode;
  */
 public enum IBRepoResp implements RespCode {
 
-	UNKNOWN_ERROR("UNKNOWN_ERROR", "系统异常"),
-	PARAM_INVALID("PARAM_INVALID", "%s"),
-	EMAIL_CODE_SENT("EMAIL_CODE_SENT", "已经发送过邮件，请等待 %s 秒再重试"),
-	RESOURCE_FILE_NOT_FOUND("RESOURCE_FILE_NOT_FOUND", "资源 %s 不存在"),
-	READ_RESOURCE_FILE_FAILED("READ_RESOURCE_FILE_FAILED", "读取资源 %s 失败"),
+	UNKNOWN_ERROR(1, "系统异常"),
+	PARAM_INVALID(2, "%s"),
+	EMAIL_CODE_SENT(3, "已经发送过邮件，请等待 %s 秒再重试"),
+	RESOURCE_FILE_NOT_FOUND(4, "资源 %s 不存在"),
+	READ_RESOURCE_FILE_FAILED(5, "读取资源 %s 失败"),
 	;
 
-	private String code;
+	private int code;
 	private String desc;
 
-	IBRepoResp(String code, String desc) {
+	IBRepoResp(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
 
 	@Override
-	public String getCode() {
-		return code;
-	}
+	public int getCode() { return code; }
 
 	@Override
-	public String getDesc() {
-		return desc;
-	}
+	public String getDesc() { return desc; }
 
-	public static IBRepoResp findByCode(String code) {
+	public static IBRepoResp findByCode(int code) {
 		for (IBRepoResp response : IBRepoResp.values()) {
-			if (response.code.equals(code)) {
+			if (response.code == code) {
 				return response;
 			}
 		}
 		return null;
 	}
 
-	public static IBRepoResp of(String code) {
+	public static IBRepoResp of(int code) {
 		IBRepoResp response = findByCode(code);
 		if (response == null) {
 			throw new IllegalArgumentException(String.format("%s 不是合法的 ResponseCode", code));

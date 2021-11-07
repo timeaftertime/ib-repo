@@ -14,10 +14,10 @@ public class IBRepoException extends RuntimeException {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String code;
+	private int code;
 	private String desc;
 
-	public IBRepoException(String code, String desc) {
+	public IBRepoException(int code, String desc) {
 		this.code = code;
 		this.desc = desc;
 	}
@@ -26,20 +26,12 @@ public class IBRepoException extends RuntimeException {
 		this(response.getCode(), response.getDesc());
 	}
 
-	public String getCode() {
-		return code;
-	}
+	public int getCode() { return code; }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+	public void setCode(int code) { this.code = code; }
 
-	public String getDesc() {
-		return desc;
-	}
+	public String getDesc() { return desc; }
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
+	public void setDesc(String desc) { this.desc = desc; }
 
 }
