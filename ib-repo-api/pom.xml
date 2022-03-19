@@ -11,7 +11,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.milai.beginning</groupId>
-			<artifactId>beginning-decoupling</artifactId>
+			<artifactId>beginning-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

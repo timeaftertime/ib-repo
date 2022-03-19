@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import cn.milai.common.decoupling.Resp;
+import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.IBRepoResp;
 import cn.milai.ibrepo.ex.IBRepoException;
 
@@ -24,7 +24,8 @@ public class ServiceExceptionHandler {
 	private static final Logger LOG = LoggerFactory.getLogger(ServiceExceptionHandler.class);
 
 	@Pointcut("execution(public * cn.milai.ibrepo.service.*.*(..))")
-	public void serviceMethods() {}
+	public void serviceMethods() {
+	}
 
 	@Around("serviceMethods()")
 	public Object handleUnhandledException(ProceedingJoinPoint point) {

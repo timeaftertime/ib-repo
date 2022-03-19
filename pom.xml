@@ -25,7 +25,6 @@
 		<mysql.driver.version>8.0.18</mysql.driver.version>
 		<mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
 		<jedis.version>3.2.0</jedis.version>
-		<mapstruct.version>1.3.1.Final</mapstruct.version>
 	</properties>
 
 	<build>
@@ -63,7 +62,7 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.milai.beginning</groupId>
-				<artifactId>beginning-decoupling</artifactId>
+				<artifactId>beginning-api</artifactId>
 				<version>${beginning.version}</version>
 			</dependency>
 			<dependency>

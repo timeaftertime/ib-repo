@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.milai.common.decoupling.Resp;
+import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.IBRepoResp;
 import cn.milai.ibrepo.ex.ParamInvalidException;
 

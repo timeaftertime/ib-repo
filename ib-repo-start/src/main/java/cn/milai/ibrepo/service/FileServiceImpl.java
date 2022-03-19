@@ -9,7 +9,7 @@ import java.io.InputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.milai.common.decoupling.Resp;
+import cn.milai.common.api.Resp;
 import cn.milai.ibrepo.IBRepoResp;
 import cn.milai.ibrepo.conf.IBRepoFileConf;
 import cn.milai.ibrepo.util.ValidUtil;

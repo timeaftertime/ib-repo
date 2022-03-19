@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.milai.common.decoupling.Resp;
-import cn.milai.common.decoupling.map.Mappers;
+import cn.milai.common.api.Resp;
+import cn.milai.common.api.map.Mappers;
 import cn.milai.ibrepo.conf.CookieKey;
 import cn.milai.ibrepo.controller.vo.UserVO;
 import cn.milai.ibrepo.controller.vo.UserVO.LoginGroup;
