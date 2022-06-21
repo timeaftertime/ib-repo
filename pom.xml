@@ -22,7 +22,7 @@
 	<properties>
 		<beginning.version>0.0.5-SNAPSHOT</beginning.version>
 		<ib.repo.version>0.0.2-SNAPSHOT</ib.repo.version>
-		<mysql.driver.version>8.0.18</mysql.driver.version>
+		<mysql.driver.version>8.0.28</mysql.driver.version>
 		<mybatis.spring.boot.version>2.1.1</mybatis.spring.boot.version>
 		<jedis.version>3.2.0</jedis.version>
 	</properties>
